@@ -59,3 +59,5 @@
 !/themes/admin_default/modules/organs
 /.buildpath
 /.settings
+/.github
+/LICENSE
