@@ -197,7 +197,7 @@ function getall_organid_parent($array_organs, $oid)
     if ($array_organs[$oid]['parentid'] > 0) {
         $array_id[] = $array_organs[$oid]['parentid'];
         $temp_array = getall_organid_parent($array_organs, $array_organs[$oid]['parentid']);
-        $array_id = array_merge($array_id, $temp_array);
+        $array_id = array_merge($temp_array, $array_id);
     }
     return $array_id;
 }
