@@ -103,8 +103,14 @@ if ($organs_data['numsub'] > 0) {
             $suborg[$i]['link'] = $organinfo['link'];
             $suborg[$i]['title'] = ucwords(mb_strtolower($organinfo['title']));
 
+            //So nhan su hien thi o to chuc co so con khi xem to chuc co so cha
+            $limit = $arr_config['per_page_parent'];
+            if($limit > 0){
+                $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . intval($organinfo['organid']) . ' AND active=1 ORDER BY weight LIMIT ' . $limit;
+            }else{
+                $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . intval($organinfo['organid']) . ' AND active=1 ORDER BY weight';
+            }
             //Hien thi danh sach nhan su
-            $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . intval($organinfo['organid']) . ' AND active=1 ORDER BY weight LIMIT 5';
             $result = $db->query($sql);
             while ($row = $result->fetch()) {
                 if (!empty($row['photo']) and file_exists(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $module_upload . '/' . $row['photo'])) {
