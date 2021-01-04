@@ -105,8 +105,8 @@ if ($organs_data['numsub'] > 0) {
 
             //Số nhân sự hiển thị ở tổ chức
             $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . intval($organinfo['organid']) . ' AND active=1 ORDER BY weight';
-            if($arr_config['per_page_parent'] > 0){
-                $sql .= 'LIMIT ' . $arr_config['per_page_parent'];
+            if ($arr_config['per_page_parent'] > 0) {
+                $sql .= ' LIMIT ' . $arr_config['per_page_parent'];
             }
             //Hien thi danh sach nhan su
             $result = $db->query($sql);
