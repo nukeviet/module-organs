@@ -37,6 +37,12 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>{LANG.config_per_page_parent}</td>
+                        <td>
+                            <input type="text" name="per_page_parent" value="{DATA.per_page_parent}" class="form-control w100" />
+                        </td>
+                    </tr>
+                    <tr>
                         <td>{LANG.config_thumb_size}</td>
                         <td>
                             <input type="text" name="thumb_width" value="{DATA.thumb_width}" class="form-control w100 pull-left" />

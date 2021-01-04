@@ -99,6 +99,7 @@ $lang_module['addper_no_organ2'] = "Bạn chưa được phân công quản lý 
 $lang_module['addper_no_organ3'] = "Bạn chưa được phân công quản lý tổ chức cơ sở nào do đó không có nhân sự nào được hiển thị";
 
 $lang_module['config_per_page'] = "Số nhân sự hiển thị trên một trang";
+$lang_module['config_per_page_parent'] = "Số nhân sự hiển thị ở tổ chức cơ sở con khi xem tổ chức cơ sở cha";
 $lang_module['config_organ_view'] = "Kiểu hiển thị danh sách nhân sự khi xem tổ chức";
 $lang_module['config_organ_view_0'] = "Hiển thị dạng lưới";
 $lang_module['config_organ_view_1'] = "Hiển thị dạng danh sách dọc";

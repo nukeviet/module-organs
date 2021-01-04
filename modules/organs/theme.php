@@ -283,10 +283,11 @@ function vieworg_catelist($array_content, $suborg = array())
                             $xtpl->assign('CAT', $cat);
                             if (!empty($cat['email'])) $xtpl->parse('main.cateloop.loop.cat.email');
                             $xtpl->parse('main.cateloop.loop.cat');
+                            $i = 1;
                         }
-
-                        $person['birthday'] = date('d/m/Y', $person['birthday']);
                         $person['no'] = $i;
+                        $person['birthday'] = date('d/m/Y', $person['birthday']);
+                        
                         if (!empty($person['position_other'])) $person['position_other'] = '</br>' . $person['position_other'];
                         if (!empty($person['professional'])) $person['professional'] = '</br>' . $person['professional'];
                         $xtpl->assign('ROW', $person);
