@@ -276,17 +276,6 @@ function vieworg_catelist($array_content, $suborg = array())
                     if (!empty($cate['fax'])) $xtpl->parse('main.cateloop.fax');
                     $i = 1;
                     $org_item = '';
-
-                    /* foreach ($content['data'] as $current_key => $current_array) {
-                        foreach ($content['data'] as $search_key => $search_array) {
-                            if ($search_array['organid'] == $current_array['organid']) {
-                                if ($search_key == $current_key) {
-                                    $i = 0;
-                                }
-                            }
-                        }
-                    } */
-
                     foreach ($content['data'] as $person) {
                         if ($content['id'] != $person['organid'] and $person['organid'] != $org_item and empty($array_op[1]) and sizeof($suborganid) > 1) {
                             $org_item = $person['organid'];
@@ -294,6 +283,7 @@ function vieworg_catelist($array_content, $suborg = array())
                             $xtpl->assign('CAT', $cat);
                             if (!empty($cat['email'])) $xtpl->parse('main.cateloop.loop.cat.email');
                             $xtpl->parse('main.cateloop.loop.cat');
+                            $i = 1;
                         }
                         $person['no'] = $i;
                         $person['birthday'] = date('d/m/Y', $person['birthday']);
