@@ -42,6 +42,8 @@ if (!empty($oid)) {
     $base_url .= '&amp;oid=' . intval($oid);
 }
 
+$canonicalUrl = getCanonicalUrl($base_url, true, true);
+
 if (!empty($sql_search)) {
     $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE ' . implode(' AND ', $sql_search) . ' ORDER BY weight LIMIT ' . (($page - 1) * $per_page) . ',' . $per_page;
     $result = $db->query($sql);

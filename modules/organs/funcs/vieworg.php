@@ -14,6 +14,7 @@ $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 
 $per_page = $arr_config['per_page'];
+$page_url = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name;
 
 //get pages
 $page = 1;
@@ -22,11 +23,11 @@ if (isset($array_op[2])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        nv_redirect_location(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name);
+        $canonicalUrl = getCanonicalUrl($page_url, true, true);
     }
 }
 if (isset($array_op[3])) {
-    nv_redirect_location(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name);
+    $canonicalUrl = getCanonicalUrl($page_url, true, true);
 }
 
 //get id
@@ -58,12 +59,12 @@ while ($parentid > 0) {
 krsort($array_mod_title, SORT_NUMERIC);
 
 if (empty($organs_data)) {
-    $redirect = "<meta http-equiv=\"Refresh\" content=\"3;URL=" . nv_url_rewrite(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name, true) . "\" />";
+    $redirect = "<meta http-equiv=\"Refresh\" content=\"3;URL=" . nv_url_rewrite($page_url, true) . "\" />";
     nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] . $redirect);
 }
 
 $contents = '';
-$base_url = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "/" . $organs_data['alias'] . "-" . $organs_data['organid'];
+$base_url = $page_url . "&" . NV_OP_VARIABLE . "=" . $op . "/" . $organs_data['alias'] . "-" . $organs_data['organid'];
 
 $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . $id . ' AND active=1 ORDER BY weight LIMIT ' . $per_page . ' OFFSET ' . ($page - 1) * $per_page;
 $result = $db->query($sql);
@@ -79,7 +80,7 @@ while ($row = $result->fetch()) {
         $row['photo'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
     }
 
-    $row['link'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=person/" . $global_organ_rows[$id]['alias'] . "-" . $id . "/" . change_alias($row['name']) . "-" . $row['personid'];
+    $row['link'] = $page_url . "&" . NV_OP_VARIABLE . "=person/" . $global_organ_rows[$id]['alias'] . "-" . $id . "/" . change_alias($row['name']) . "-" . $row['personid'];
     $person_data[] = $row;
 }
 
