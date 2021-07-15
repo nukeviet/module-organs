@@ -1,5 +1,5 @@
 <!-- BEGIN: main -->
-<script src="{NV_BASE_SITEURL}themes/default/js/jquery.matchHeight-min.js" type="text/javascript"></script>
+<script src="{NV_STATIC_URL}themes/default/js/jquery.matchHeight-min.js" type="text/javascript"></script>
 <div class="panel panel-primary">
     <div class="panel-heading">
         {DATA.title}
@@ -47,8 +47,7 @@
                     <div class="caption text-center">
                         <h3><a href="{ROW.link}" title="{ROW.name}">{ROW.name}</a></h3>
                         <p>
-                            {ROW.position}<br />
-                            {ROW.birthday}
+                            {ROW.position}<br /> {ROW.birthday}
                         </p>
                     </div>
                 </div>
@@ -65,8 +64,10 @@
 </div>
 <!-- END: pages -->
 <script type="text/javascript">
-$(function() {
-	$('.thumbnail').matchHeight({ property: 'min-height' });
-});
+    $(function() {
+        $('.thumbnail').matchHeight({
+            property: 'min-height'
+        });
+    });
 </script>
 <!-- END: main -->

@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
-<link rel="stylesheet" href="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.treeview.css" />
-<script src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.cookie.js" type="text/javascript"></script>
-<script src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.treeview.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery/jquery.treeview.css" />
+<script src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery/jquery.cookie.js" type="text/javascript"></script>
+<script src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery/jquery.treeview.min.js" type="text/javascript"></script>
 <div class="divscroll">
     <ul id="browser" class="filetree">
         {MENU}
@@ -11,7 +11,7 @@
     $("#browser").treeview({
         persist: "cookie",
         collapsed: true,
-        animated:"normal",
+        animated: "normal",
         unique: true
     });
 </script>

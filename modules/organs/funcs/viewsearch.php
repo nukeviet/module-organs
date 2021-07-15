@@ -49,6 +49,9 @@ if (!empty($sql_search)) {
     $result = $db->query($sql);
     $result_all = $db->query('SELECT FOUND_ROWS()');
     $numf = $result_all->fetchColumn();
+
+    betweenURLs($page, ceil($numf/$per_page), $base_url, '/page-', $prevPage, $nextPage);
+
     $all_page = ($numf) ? $numf : 1;
     $person_data = array();
     while ($row = $result->fetch()) {
@@ -57,7 +60,7 @@ if (!empty($sql_search)) {
         } elseif (!empty($row['photo']) and file_exists(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['photo'])) {
             $row['photo'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['photo'];
         } else {
-            $row['photo'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
+            $row['photo'] = NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
         }
     
         $row['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=person/' . $global_organ_rows[$row['organid']]['alias'] . '-' . $row['organid'] . '/' . change_alias($row['name']) . '-' . $row['personid'];
