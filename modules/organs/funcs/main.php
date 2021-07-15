@@ -12,10 +12,13 @@ if (!defined('NV_IS_MOD_ORGAN')) die('Stop!!!');
 
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
 
 if (isset($array_op[0])) {
-    nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
+    nv_redirect_location($page_url);
 }
+
+$canonicalUrl = getCanonicalUrl($page_url, true, true);
 
 $array_content = array();
 foreach ($global_organ_rows as $organid => $organinfo) {

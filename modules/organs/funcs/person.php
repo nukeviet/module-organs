@@ -11,6 +11,7 @@
 if (!defined('NV_IS_MOD_ORGAN')) die('Stop!!!');
 
 $key_words = $module_info['keywords'];
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
 
 // Get Perason ID
 $pid = 0;
@@ -33,8 +34,9 @@ if (!empty($array_op[1])) {
 }
 
 if (isset($array_op[3])) {
-    nv_redirect_location(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name);
+    nv_redirect_location($page_url);
 }
+$canonicalUrl = getCanonicalUrl($page_url, true, true);
 
 $data_content = array();
 $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $pid . ' AND active=1';

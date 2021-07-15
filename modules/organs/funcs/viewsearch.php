@@ -23,7 +23,7 @@ $e = $nv_Request->get_title('e', 'get', '');
 $p = $nv_Request->get_title('p', 'get', '');
 
 $sql_search = array();
-$base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
+$page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
 
 if (!empty($q)) {
     $sql_search[] = 'name LIKE \'%' . $db->dblikeescape($q) . '%\'';

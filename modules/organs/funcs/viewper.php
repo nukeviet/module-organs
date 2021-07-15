@@ -13,6 +13,8 @@ if (!defined('NV_IS_MOD_ORGAN')) die('Stop!!!');
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $id = $nv_Request->get_int('id', 'get', 0);
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
+$canonicalUrl = getCanonicalUrl($page_url, true, true);
 
 $data_content = array();
 $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $id;
