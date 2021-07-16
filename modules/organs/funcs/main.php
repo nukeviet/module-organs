@@ -18,7 +18,7 @@ if (isset($array_op[0])) {
     nv_redirect_location($page_url);
 }
 
-$canonicalUrl = getCanonicalUrl($page_url, true, true);
+$canonicalUrl = getCanonicalUrl($page_url);
 
 $array_content = array();
 foreach ($global_organ_rows as $organid => $organinfo) {

@@ -23,11 +23,11 @@ if (isset($array_op[2])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        $canonicalUrl = getCanonicalUrl($page_url, true, true);
+        $canonicalUrl = getCanonicalUrl($page_url);
     }
 }
 if (isset($array_op[3])) {
-    $canonicalUrl = getCanonicalUrl($page_url, true, true);
+    $canonicalUrl = getCanonicalUrl($page_url);
 }
 
 //get id
