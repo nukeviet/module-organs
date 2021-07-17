@@ -14,7 +14,7 @@ $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 
 $per_page = $arr_config['per_page'];
-$page_url = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name;
+$base_url = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name;
 
 //get pages
 $page = 1;
@@ -22,12 +22,6 @@ if (isset($array_op[2])) {
     if (preg_match('/^page\-([0-9]{1,10})$/', $array_op[2], $m)) {
         $page = intval($m[1]);
     }
-    if ($page <= 1) {
-        $canonicalUrl = getCanonicalUrl($page_url);
-    }
-}
-if (isset($array_op[3])) {
-    $canonicalUrl = getCanonicalUrl($page_url);
 }
 
 //get id
@@ -59,12 +53,12 @@ while ($parentid > 0) {
 krsort($array_mod_title, SORT_NUMERIC);
 
 if (empty($organs_data)) {
-    $redirect = "<meta http-equiv=\"Refresh\" content=\"3;URL=" . nv_url_rewrite($page_url, true) . "\" />";
+    $redirect = "<meta http-equiv=\"Refresh\" content=\"3;URL=" . nv_url_rewrite($base_url, true) . "\" />";
     nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] . $redirect);
 }
 
 $contents = '';
-$base_url = $page_url . "&" . NV_OP_VARIABLE . "=" . $op . "/" . $organs_data['alias'] . "-" . $organs_data['organid'];
+$base_url .=  "&" . NV_OP_VARIABLE . "=" . $op . "/" . $organs_data['alias'] . "-" . $organs_data['organid'];
 
 $sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . $id . ' AND active=1 ORDER BY weight LIMIT ' . $per_page . ' OFFSET ' . ($page - 1) * $per_page;
 $result = $db->query($sql);
@@ -84,6 +78,9 @@ while ($row = $result->fetch()) {
     $row['link'] = $page_url . "&" . NV_OP_VARIABLE . "=person/" . $global_organ_rows[$id]['alias'] . "-" . $id . "/" . change_alias($row['name']) . "-" . $row['personid'];
     $person_data[] = $row;
 }
+
+$page_url = $base_url . '/page-' . $page;
+$canonicalUrl = getCanonicalUrl($page_url);
 
 $html_pages = nv_alias_page($page_title, $base_url, $all_page, $per_page, $page);
 if ($arr_config['organ_view_type']) {
@@ -131,6 +128,7 @@ if ($organs_data['numsub'] > 0) {
             unset($person_data);
         }
     }
+
     $contents .= vieworg_catelist($array_content, $suborg);
 }
 

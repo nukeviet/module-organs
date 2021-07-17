@@ -11,7 +11,7 @@
 if (!defined('NV_IS_MOD_ORGAN'))
     die('Stop!!!');
 
-$where = '';
+$where = [];
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
@@ -26,29 +26,38 @@ $array_search = [
 ];
 
 if (!empty($array_search['q'])) {
-    $where .= ' AND name LIKE \'%' . $db->dblikeescape($array_search['q']) . '%\'';
+    $where[] = 'name LIKE \'%' . $db->dblikeescape($array_search['q']) . '%\'';
     $base_url .= '&amp;q=' . urlencode($array_search['q']);
 }
 if (!empty($array_search['e'])) {
-    $where .= ' AND email LIKE \'%' . $db->dblikeescape($array_search['e']) . '%\'';
+    $where[] = 'email LIKE \'%' . $db->dblikeescape($array_search['e']) . '%\'';
     $base_url .= '&amp;e=' . urlencode($array_search['e']);
 }
 if (!empty($array_search['p'])) {
-    $where .= ' AND (mobile LIKE \'%' . $db->dblikeescape($array_search['p']) . '%\' OR phone LIKE \'%' . $db->dblikeescape($array_search['p']) . '%\')';
+    $where[] = '(mobile LIKE \'%' . $db->dblikeescape($array_search['p']) . '%\' OR phone LIKE \'%' . $db->dblikeescape($array_search['p']) . '%\')';
     $base_url .= '&amp;q=' . urlencode($array_search['p']);
 }
 if (!empty($array_search['oid'])) {
-    $where .= ' AND organid = ' . intval($array_search['oid']);
+    $where[] = 'organid = ' . intval($array_search['oid']);
     $base_url .= '&amp;oid=' . intval($array_search['oid']);
 }
 
-$canonicalUrl = getCanonicalUrl($base_url);
+if ($page > 1) {
+    $base_url .= '&amp;page=' . intval($page);
+}
+
+$page_url = $base_url;
+
+$canonicalUrl = getCanonicalUrl($page_url);
 
 // Fetch Limit
 $db->sqlreset()
     ->select('COUNT(*)')
-    ->from(NV_PREFIXLANG . '_' . $module_data . '_person')
-    ->where('1.1' . $where);
+    ->from(NV_PREFIXLANG . '_' . $module_data . '_person');
+
+if (!empty($where)) {
+    $db->where(implode(' AND ', $where));
+}
 
 $sth = $db->prepare($db->sql());
 

@@ -11,7 +11,6 @@
 if (!defined('NV_IS_MOD_ORGAN')) die('Stop!!!');
 
 $key_words = $module_info['keywords'];
-$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
 
 // Get Perason ID
 $pid = 0;
@@ -33,10 +32,6 @@ if (!empty($array_op[1])) {
     }
 }
 
-if (isset($array_op[3])) {
-    $canonicalUrl = getCanonicalUrl($page_url);
-}
-
 $data_content = array();
 $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $pid . ' AND active=1';
 $result = $db->query($sql);
@@ -56,9 +51,9 @@ if (!empty($data_content['photo']) and file_exists(NV_ROOTDIR . '/' . NV_FILES_D
 }
 $data_content['imgsrc'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data_content['photo'];
 
-$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=person/' . $global_organ_rows[$data_content['organid']]['alias'] . '-' . $data_content['organid'] . '/' . change_alias($data_content['name']) . '-' . $data_content['personid'], true);
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=person/' . $global_organ_rows[$data_content['organid']]['alias'] . '-' . $data_content['organid'] . '/' . change_alias($data_content['name']) . '-' . $data_content['personid'];
 
-$canonicalUrl = getCanonicalUrl($base_url_rewrite);
+$canonicalUrl = getCanonicalUrl($page_url);
 
 // thanh dieu huong
 $parentid = $data_content['organid'];
