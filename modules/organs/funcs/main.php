@@ -14,10 +14,6 @@ $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
 
-if (isset($array_op[0])) {
-    nv_redirect_location($page_url);
-}
-
 $canonicalUrl = getCanonicalUrl($page_url);
 
 $array_content = array();

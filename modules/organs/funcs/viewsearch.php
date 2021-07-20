@@ -43,7 +43,7 @@ if (!empty($array_search['oid'])) {
 }
 
 if ($page > 1) {
-    $base_url .= '&amp;page=' . intval($page);
+    $page_url .= '&amp;page=' . intval($page);
 }
 
 $page_url = $base_url;
@@ -64,7 +64,7 @@ $sth = $db->prepare($db->sql());
 $sth->execute();
 $num_items = $sth->fetchColumn();
 
-betweenURLs($page, ceil($num_items / $per_page), $base_url, '$page=', $prevPage, $nextPage);
+betweenURLs($page, ceil($num_items / $per_page), $base_url, '/page=', $prevPage, $nextPage);
 
 $db->select('*')
     ->order('weight')
