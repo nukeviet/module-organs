@@ -79,7 +79,9 @@ while ($row = $result->fetch()) {
     $person_data[] = $row;
 }
 
-$page_url = $base_url . '/page-' . $page;
+if ($page > 1) {
+    $page_url = $base_url . '/page-' . $page;
+}
 $canonicalUrl = getCanonicalUrl($page_url);
 
 $html_pages = nv_alias_page($page_title, $base_url, $all_page, $per_page, $page);
