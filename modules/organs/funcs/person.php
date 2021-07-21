@@ -32,10 +32,6 @@ if (!empty($array_op[1])) {
     }
 }
 
-if (isset($array_op[3])) {
-    nv_redirect_location(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name);
-}
-
 $data_content = array();
 $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $pid . ' AND active=1';
 $result = $db->query($sql);
@@ -51,20 +47,13 @@ if (!empty($data_content['photo']) and file_exists(NV_ROOTDIR . '/' . NV_FILES_D
 } elseif (!empty($data_content['photo']) and file_exists(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data_content['photo'])) {
     $data_content['photo_thumb'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data_content['photo'];
 } else {
-    $data_content['photo_thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
+    $data_content['photo_thumb'] = NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
 }
 $data_content['imgsrc'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data_content['photo'];
 
-$base_url_rewrite = nv_url_rewrite(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=person/' . $global_organ_rows[$data_content['organid']]['alias'] . '-' . $data_content['organid'] . '/' . change_alias($data_content['name']) . '-' . $data_content['personid'], true);
-if ($_SERVER['REQUEST_URI'] == $base_url_rewrite) {
-    $canonicalUrl = NV_MAIN_DOMAIN . $base_url_rewrite;
-} elseif (NV_MAIN_DOMAIN . $_SERVER['REQUEST_URI'] != $base_url_rewrite) {
-    //chuyen huong neu doi alias
-    nv_redirect_location($base_url_rewrite);
-} else {
-    $canonicalUrl = $base_url_rewrite;
-}
-$canonicalUrl = str_replace('&', '&amp;', $canonicalUrl);
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=person/' . $global_organ_rows[$data_content['organid']]['alias'] . '-' . $data_content['organid'] . '/' . change_alias($data_content['name']) . '-' . $data_content['personid'];
+
+$canonicalUrl = getCanonicalUrl($page_url);
 
 // thanh dieu huong
 $parentid = $data_content['organid'];

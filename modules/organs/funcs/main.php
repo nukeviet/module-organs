@@ -12,10 +12,9 @@ if (!defined('NV_IS_MOD_ORGAN')) die('Stop!!!');
 
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
+$page_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name;
 
-if (isset($array_op[0])) {
-    nv_redirect_location(NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
-}
+$canonicalUrl = getCanonicalUrl($page_url);
 
 $array_content = array();
 foreach ($global_organ_rows as $organid => $organinfo) {
@@ -36,7 +35,7 @@ foreach ($global_organ_rows as $organid => $organinfo) {
             } elseif (!empty($row['photo']) and file_exists(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['photo'])) {
                 $row['photo'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['photo'];
             } else {
-                $row['photo'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
+                $row['photo'] = NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
             }
 
             $row['link'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=person/' . $global_organ_rows[$organid]['alias'] . '-' . $organid . '/' . change_alias($row['name']) . '-' . $row['personid'];

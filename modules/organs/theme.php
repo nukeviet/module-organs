@@ -342,7 +342,7 @@ function vieworg_catelist($array_content, $suborg = array())
 
 }
 
-function searchresult($person_data, $html_pages)
+function searchresult($person_data, $html_pages, $array_search)
 {
     global $global_config, $module_name, $arr_config, $lang_module, $module_config, $module_info;
     $xtpl = new XTemplate('viewsearch.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
@@ -351,10 +351,10 @@ function searchresult($person_data, $html_pages)
     $xtpl->assign('TEMPLATE', $global_config['site_theme']);
     $xtpl->assign('WIDTH', $arr_config['thumb_width']);
     $xtpl->assign('HEIGHT', $arr_config['thumb_height']);
+    $xtpl->assign('ARRAY_SEARCH', $array_search);
 
     if (!empty($person_data)) {
         foreach ($person_data as $person) {
-            $person['birthday'] = date('d/m/Y', $person['birthday']);
             $xtpl->assign('ROW', $person);
 
             $xtpl->parse('main.loop');
