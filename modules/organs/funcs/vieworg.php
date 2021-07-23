@@ -75,7 +75,7 @@ while ($row = $result->fetch()) {
         $row['photo'] = NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/no-avatar.jpg';
     }
 
-    $row['link'] = $page_url . "&" . NV_OP_VARIABLE . "=person/" . $global_organ_rows[$id]['alias'] . "-" . $id . "/" . change_alias($row['name']) . "-" . $row['personid'];
+    $row['link'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=person/" . $global_organ_rows[$id]['alias'] . "-" . $id . "/" . change_alias($row['name']) . "-" . $row['personid'];
     $person_data[] = $row;
 }
 $page_url = $base_url;
