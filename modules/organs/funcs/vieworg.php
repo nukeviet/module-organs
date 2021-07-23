@@ -78,7 +78,7 @@ while ($row = $result->fetch()) {
     $row['link'] = $page_url . "&" . NV_OP_VARIABLE . "=person/" . $global_organ_rows[$id]['alias'] . "-" . $id . "/" . change_alias($row['name']) . "-" . $row['personid'];
     $person_data[] = $row;
 }
-
+$page_url = $base_url;
 if ($page > 1) {
     $page_url = $base_url . '/page-' . $page;
 }
