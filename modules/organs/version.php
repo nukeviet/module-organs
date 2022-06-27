@@ -8,18 +8,18 @@
  * @Createdate Dec 3, 2010  11:24:58 AM
  */
 
-$module_version = array(
+$module_version = [
     'name' => 'Organs',
     'modfuncs' => 'main, vieworg, person, viewsearch',
     'submenu' => '',
     'is_sysmod' => 0,
     'virtual' => 1,
-    'version' => '4.6.00',
-    'date' => 'Saturday, August 21, 2021 17:00:00 AM GMT+07:00',
-    'author' => 'VINADES (contact@vinades.vn)',
+    'version' => '4.5.00',
+    'date' => 'Monday, June 27, 2022 10:57:33 AM GMT+07:00',
+    'author' => 'VINADES.,JSC <contact@vinades.vn>',
     'note' => '',
-    'uploads_dir' => array(
+    'uploads_dir' => [
         $module_name,
         $module_name . '/' . date('Y_m')
-    )
-);
+    ]
+];
