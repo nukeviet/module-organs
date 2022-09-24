@@ -10,7 +10,7 @@
 
 if (!defined('NV_IS_FILE_ADMIN')) die('Stop!!!');
 
-if ($nv_Request->isset_request('submit', 'post')) {
+if ($nv_Request->isset_request('btnsubmit', 'post')) {
     $array_config['per_page'] = $nv_Request->get_int('per_page', 'post', 10);
     $array_config['per_page_parent'] = $nv_Request->get_int('per_page_parent', 'post', 5);
     $array_config['organ_view_type'] = $nv_Request->get_int('organ_view_type', 'post', 0);
