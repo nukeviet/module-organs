@@ -58,7 +58,7 @@ $array_permissions_mod = array(
 );
 
 // Lưu thông tin thiết lập quyền quản lý
-if ($nv_Request->isset_request('submit', 'post') and $userid > 0) {
+if ($nv_Request->isset_request('btnsubmit', 'post') and $userid > 0) {
     $admin_module = $nv_Request->get_int('admin_module', 'post', 0);
     if ($admin_module == 1 or $admin_module == 2) {
         if (!defined('NV_IS_SPADMIN')) {

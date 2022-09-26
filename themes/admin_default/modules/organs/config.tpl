@@ -66,7 +66,7 @@
                 </tbody>
           </table>
         </div>
-        <input type="submit" name="submit" value="{LANG.save}" class="btn btn-primary" />
+        <input type="submit" name="btnsubmit" value="{LANG.save}" class="btn btn-primary" />
     </form>
 </div>
 <!-- END: main -->

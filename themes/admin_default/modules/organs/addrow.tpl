@@ -89,7 +89,7 @@
             </tbody>
         </table>
         <center>
-            <input class="btn btn-primary" name="submit" type="submit" value="{LANG.save}"/>
+            <input class="btn btn-primary" name="btnsubmit" type="submit" value="{LANG.save}"/>
         </center>
         <br>
     </form>

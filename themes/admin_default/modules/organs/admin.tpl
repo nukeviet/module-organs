@@ -68,7 +68,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td colspan="2" class="text-center"><input class="btn btn-primary" type="submit" value="{LANG.save}" name="submit"></td>
+                <td colspan="2" class="text-center"><input class="btn btn-primary" type="submit" value="{LANG.save}" name="btnsubmit"></td>
             </tr>
         </tfoot>
     </table>
