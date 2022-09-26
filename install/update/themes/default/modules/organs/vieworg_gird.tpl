@@ -28,7 +28,7 @@
             <!-- END: website -->
         </ul>
         <!-- BEGIN: about -->
-        <p class="short-desc">{DATA.description}</p>
+        <p>{DATA.description}</p>
         <!-- END: about -->
 
         <p class="text-center">
@@ -63,54 +63,10 @@
     {html_pages}
 </div>
 <!-- END: pages -->
-<style>
-    .short-desc .morecontent span {
-        display: none;
-    }
-    .morelink, .morelink:link {
-        display: block;
-        color: #428bca;
-        font-weight: bold;
-        margin-top: 5px;
-    }
-    .morelink.less {
-        margin-top: -25px;
-    }
-</style>
 <script type="text/javascript">
     $(function() {
         $('.thumbnail').matchHeight({
             property: 'min-height'
-        });
-    });
-    $(document).ready(function() {
-        var showChar = 500;
-        var ellipsestext = "...";
-        var moretext = "{LANG.moretext}";
-        var lesstext = "{LANG.lesstext}";
-        var content = $('.short-desc').html();
-        if ($('.short-desc').length) {
-            if(content.length > showChar) {
-
-                var c = content.substr(0, showChar);
-                var h = content.substr(showChar, content.length - showChar);
-
-                var html = c + '<span class="moreellipses">' + ellipsestext+ '</span><span class="morecontent"><span>' + h + '</span><a href="#" class="morelink">' + moretext + '</a></span>';
-
-                $('.short-desc').html(html);
-            }
-        }
-        $(".morelink").click(function(){
-            if($(this).hasClass("less")) {
-                $(this).removeClass("less");
-                $(this).html(moretext);
-            } else {
-                $(this).addClass("less");
-                $(this).html(lesstext);
-            }
-            $(this).parent().prev().toggle();
-            $(this).prev().toggle();
-            return false;
         });
     });
 </script>
