@@ -178,18 +178,21 @@ function nv_up_f2()
     foreach ($array_modlang_update as $lang => $array_mod) {
         foreach ($array_mod['mod'] as $module_info) {
             $table_prefix = $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'];
-            $num = $db->query("SELECT COUNT(*) FROM " . $table_prefix . "_config WHERE config_name='per_page_parent'")->fetchColumn();
-
-            if (!$num) {
-                $db->query("INSERT INTO " . $table_prefix . "_config (
-                    config_name, config_value
-                ) VALUES (
-                    'per_page_parent', '5'
-                )");
-            } else {
-                $db->query("UPDATE " . $table_prefix . "_config SET
-                    config_value='5'
-                WHERE config_name='per_page_parent'");
+            try {
+                $num = $db->query("SELECT COUNT(*) FROM " . $table_prefix . "_config WHERE config_name='per_page_parent'")->fetchColumn();
+                if (!$num) {
+                    $db->query("INSERT INTO " . $table_prefix . "_config (
+                        config_name, config_value
+                    ) VALUES (
+                        'per_page_parent', '5'
+                    )");
+                } else {
+                    $db->query("UPDATE " . $table_prefix . "_config SET
+                        config_value='5'
+                    WHERE config_name='per_page_parent'");
+                }
+            } catch(PDOException $e) {
+                trigger_error($e->getMessage());
             }
         }
     }
