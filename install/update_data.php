@@ -8,8 +8,9 @@
  * @Createdate 2-10-2010 20:59
  */
 
-if (!defined('NV_IS_UPDATE'))
+if (!defined('NV_IS_UPDATE')) {
     die('Stop!!!');
+}
 
 $nv_update_config = array();
 
@@ -24,10 +25,10 @@ $nv_update_config['formodule'] = 'organs';
 
 // Thong tin phien ban, tac gia, ho tro
 $nv_update_config['release_date'] = 1664008363;
-$nv_update_config['author'] = 'VINADES.,JSC (contact@vinades.vn)';
+$nv_update_config['author'] = 'VINADES.,JSC <contact@vinades.vn>';
 $nv_update_config['support_website'] = 'https://github.com/nukeviet/module-organs/tree/to-4.5.02';
 $nv_update_config['to_version'] = '4.5.02';
-$nv_update_config['allow_old_version'] = array('4.5.00');
+$nv_update_config['allow_old_version'] = array('4.3.00', '4.5.00');
 
 // 0:Nang cap bang tay, 1:Nang cap tu dong, 2:Nang cap nua tu dong
 $nv_update_config['update_auto_type'] = 1;
@@ -36,14 +37,31 @@ $nv_update_config['lang'] = array();
 $nv_update_config['lang']['vi'] = array();
 
 // Tiếng Việt
-$nv_update_config['lang']['vi']['nv_up_update'] = 'Cập nhật Module';
+$nv_update_config['lang']['vi']['nv_up_f1'] = 'Thêm bảng dữ liệu';
+$nv_update_config['lang']['vi']['nv_up_f2'] = 'Cập nhật cấu hình CSDL';
+$nv_update_config['lang']['vi']['nv_up_finish'] = 'Đánh dấu phiên bản mới';
 
 $nv_update_config['tasklist'] = array();
+
+$nv_update_config['tasklist'][] = array(
+    'r' => '4.5.00',
+    'rq' => 1,
+    'l' => 'nv_up_f1',
+    'f' => 'nv_up_f1'
+);
+
+$nv_update_config['tasklist'][] = array(
+    'r' => '4.5.00',
+    'rq' => 1,
+    'l' => 'nv_up_f2',
+    'f' => 'nv_up_f2'
+);
+
 $nv_update_config['tasklist'][] = array(
     'r' => '4.5.02',
     'rq' => 1,
-    'l' => 'nv_up_update',
-    'f' => 'nv_up_update'
+    'l' => 'nv_up_finish',
+    'f' => 'nv_up_finish'
 );
 
 // Danh sach cac function
@@ -95,14 +113,97 @@ while (list($_tmp) = $result->fetch(PDO::FETCH_NUM)) {
     }
 }
 
-
 /**
- * nv_up_update()
+ * nv_up_f1()
  *
  * @return
  *
  */
-function nv_up_update()
+function nv_up_f1()
+{
+    global $nv_update_baseurl, $db, $db_config, $nv_Cache, $array_modlang_update;
+
+    $return = array(
+        'status' => 1,
+        'complete' => 1,
+        'next' => 1,
+        'link' => 'NO',
+        'lang' => 'NO',
+        'message' => ''
+    );
+
+    foreach ($array_modlang_update as $lang => $array_mod) {
+        foreach ($array_mod['mod'] as $module_info) {
+            $table_prefix = $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'];
+            try {
+                $sql = "CREATE TABLE " . $table_prefix . "_admins(
+                    userid int(11) UNSIGNED NOT NULL DEFAULT '0',
+                    organid int(11) NOT NULL DEFAULT '0',
+                    admin tinyint(4) NOT NULL DEFAULT '0',
+                    add_content tinyint(4) NOT NULL DEFAULT '0',
+                    edit_content tinyint(4) NOT NULL DEFAULT '0',
+                    status_content tinyint(4) NOT NULL DEFAULT '0',
+                    del_content tinyint(4) NOT NULL DEFAULT '0',
+                    UNIQUE KEY userid (userid,organid)
+                ) ENGINE=MyISAM";
+                $db->query($sql);
+            } catch (PDOException $e) {
+                trigger_error($e->getMessage());
+            }
+        }
+    }
+
+    return $return;
+}
+
+/**
+ * nv_up_f2()
+ *
+ * @return
+ *
+ */
+function nv_up_f2()
+{
+    global $nv_update_baseurl, $db, $db_config, $nv_Cache, $array_modlang_update;
+
+    $return = array(
+        'status' => 1,
+        'complete' => 1,
+        'next' => 1,
+        'link' => 'NO',
+        'lang' => 'NO',
+        'message' => ''
+    );
+
+    foreach ($array_modlang_update as $lang => $array_mod) {
+        foreach ($array_mod['mod'] as $module_info) {
+            $table_prefix = $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'];
+            $num = $db->query("SELECT COUNT(*) FROM " . $table_prefix . "_config WHERE config_name='per_page_parent'")->fetchColumn();
+
+            if (!$num) {
+                $db->query("INSERT INTO " . $table_prefix . "_config (
+                    config_name, config_value
+                ) VALUES (
+                    'per_page_parent', '5'
+                )");
+            } else {
+                $db->query("UPDATE " . $table_prefix . "_config SET
+                    config_value='5'
+                WHERE config_name='per_page_parent'");
+            }
+        }
+    }
+
+    return $return;
+}
+
+/**
+ * nv_up_finish()
+ *
+ * @return
+ *
+ */
+function nv_up_finish()
 {
     global $nv_update_baseurl, $db, $db_config, $nv_Cache, $nv_update_config;
 
@@ -123,7 +224,7 @@ function nv_up_update()
             $db->query("INSERT INTO " . $db_config['prefix'] . "_setup_extensions (
                 id, type, title, is_sys, is_virtual, basename, table_prefix, version, addtime, author, note
             ) VALUES (
-                374, 'module', 'organs', 0, 1, 'organs', 'organs', '" . $nv_update_config['to_version'] . " " . $nv_update_config['release_date'] . "', " . NV_CURRENTTIME . ", 'VINADES.,JSC (contact@vinades.vn)',
+                374, 'module', '" . $nv_update_config['formodule'] . "', 0, 1, '" . $nv_update_config['formodule'] . "', '" . $nv_update_config['formodule'] . "', '" . $nv_update_config['to_version'] . " " . $nv_update_config['release_date'] . "', " . NV_CURRENTTIME . ", 'VINADES.,JSC (contact@vinades.vn)',
                 ''
             )");
         } else {
