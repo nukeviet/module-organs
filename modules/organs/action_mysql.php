@@ -96,8 +96,8 @@ $sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $lang . "_"
 ('per_page_parent', '5'),
 ('organ_view_type', '0'),
 ('organ_view_type_main', '0'),
-('thumb_width', '80'),
-('thumb_height', '100'),
+('thumb_width', '130'),
+('thumb_height', '130'),
 ('email_require', '0'),
 ('phone_require', '0')
 ";

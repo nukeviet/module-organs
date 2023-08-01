@@ -125,7 +125,7 @@ div.TabView div.Pages div.Page {
 
 /*list menu h*/
 .menucate_ograns {
-    
+
 }
 
 .menucate_ograns h2 {
@@ -185,7 +185,7 @@ div.TabView div.Pages div.Page {
 }
 
 .detail_person {
-    
+
 }
 
 .detail_person .detail_img {
@@ -201,7 +201,7 @@ div.TabView div.Pages div.Page {
 }
 
 .detail_person .ullist {
-    
+
 }
 
 .detail_person .ullist li {
@@ -303,4 +303,60 @@ table.tabo thead {
 }
 .table_org{
     padding: 10px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.d-flex .flex-avatar {
+    flex-grow: 0.5
+}
+
+.d-flex .flex-des {
+    flex-grow: 1
+}
+
+.font-size-h2 {
+    text-transform: uppercase;
+    font-size: 20px;
+    margin-bottom: 8px
+}
+
+.font-size-h2 span {
+    border-bottom: 3px solid #333;
+}
+
+.flex-des p{
+   margin-bottom: 5px
+}
+
+.d-grid {
+    display: grid;
+    padding-left: 0px;
+    grid-template-columns: 1fr 1fr;
+}
+
+ul.d-grid > li{
+    margin-bottom: 5px
+}
+
+.text-break {
+    word-break: break-word;
+}
+
+.flex-avatar .img-thumbnail {
+    background-color: transparent !important;
+}
+
+@media (max-width: 549.98px) {
+    .flex-dir {
+        flex-direction: column;
+    }
+    .flex-des h2{
+        display: block !important;
+    }
+    .d-grid {
+        grid-template-columns: 1fr;
+    }
 }
