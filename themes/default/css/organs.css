@@ -310,17 +310,18 @@ table.tabo thead {
 }
 
 .d-flex .flex-avatar {
-    flex-grow: 0.5
+    flex-grow: 0.5;
 }
 
 .d-flex .flex-des {
-    flex-grow: 1
+    flex-grow: 1;
 }
 
 .font-size-h2 {
     text-transform: uppercase;
     font-size: 20px;
-    margin-bottom: 8px
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .font-size-h2 span {
@@ -328,7 +329,7 @@ table.tabo thead {
 }
 
 .flex-des p{
-   margin-bottom: 5px
+   margin-bottom: 5px;
 }
 
 .d-grid {
@@ -338,7 +339,7 @@ table.tabo thead {
 }
 
 ul.d-grid > li{
-    margin-bottom: 5px
+    margin-bottom: 5px;
 }
 
 .text-break {
