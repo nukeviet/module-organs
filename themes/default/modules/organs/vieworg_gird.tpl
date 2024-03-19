@@ -47,7 +47,7 @@
                     <div class="caption text-center">
                         <h3><a href="{ROW.link}" title="{ROW.name}">{ROW.name}</a></h3>
                         <p>
-                            {ROW.position}<br /> {ROW.birthday}
+                            {ROW.position}<!-- BEGIN: birthday --><br /> {ROW.birthday}<!-- END: birthday -->
                         </p>
                     </div>
                 </div>

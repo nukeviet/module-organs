@@ -8,7 +8,9 @@
  * @Createdate Dec 3, 2010  11:23:15 AM
  */
 
-if (!defined('NV_IS_MOD_ORGAN')) die('Stop!!!');
+if (!defined('NV_IS_MOD_ORGAN')) {
+    die('Stop!!!');
+}
 
 function detail_per($data_content)
 {
@@ -20,9 +22,9 @@ function detail_per($data_content)
     $xtpl->assign('TEMPLATE', $global_config['site_theme']);
     $xtpl->assign('WIDTH', $arr_config['thumb_width']);
 
-    if ($data_content['birthday'] != 0)
+    if ($data_content['birthday'] != 0) {
         $data_content['birthday'] = date('d/m/Y', $data_content['birthday']);
-    else {
+    } else {
         $data_content['birthday'] = '';
     }
 
@@ -146,14 +148,18 @@ function vieworg_list($organs_data, $person_data, $html_pages)
         }
     }
 
-    if ($organs_data['view']) $xtpl->assign('DATA', $organs_data);
-
-    if (!empty($organs_data['address'])) $xtpl->parse('main.address');
-
-    if (!empty($organs_data['phone'])) $xtpl->parse('main.phone');
-
-    if (!empty($organs_data['fax'])) $xtpl->parse('main.fax');
-
+    if ($organs_data['view']) {
+        $xtpl->assign('DATA', $organs_data);
+    }
+    if (!empty($organs_data['address'])) {
+        $xtpl->parse('main.address');
+    }
+    if (!empty($organs_data['phone'])) {
+        $xtpl->parse('main.phone');
+    }
+    if (!empty($organs_data['fax'])) {
+        $xtpl->parse('main.fax');
+    }
     if (!empty($organs_data['website'])) {
         $xtpl->parse('main.website');
     }
@@ -204,18 +210,31 @@ function vieworg_gird($organs_data, $person_data, $html_pages)
             $organs_data['website'] .= '<a href="http: //' . $it . '">' . $it . '</a>&nbsp;&nbsp;';
         }
     }
-    if ($organs_data['view']) $xtpl->assign('DATA', $organs_data);
-    if (!empty($organs_data['address'])) $xtpl->parse('main.address');
-    if (!empty($organs_data['phone'])) $xtpl->parse('main.phone');
-    if (!empty($organs_data['fax'])) $xtpl->parse('main.fax');
+    if ($organs_data['view']) {
+        $xtpl->assign('DATA', $organs_data);
+    }
+    if (!empty($organs_data['address'])) {
+        $xtpl->parse('main.address');
+    }
+    if (!empty($organs_data['phone'])) {
+        $xtpl->parse('main.phone');
+    }
+    if (!empty($organs_data['fax'])) {
+        $xtpl->parse('main.fax');
+    }
     if (!empty($organs_data['website'])) {
         $xtpl->parse('main.website');
     }
 
     if (!empty($person_data)) {
         foreach ($person_data as $person) {
-            $person['birthday'] = date('d/m/Y', $person['birthday']);
+            $person['birthday'] = $person['birthday'] ? nv_date('d/m/Y', $person['birthday']) : '';
             $xtpl->assign('ROW', $person);
+
+            if (!empty($person['birthday'])) {
+                $xtpl->parse('main.person.loop.birthday');
+            }
+
             $xtpl->parse('main.person.loop');
         }
 
@@ -257,11 +276,21 @@ function vieworg_catelist($array_content, $suborg = array())
                     $id = end($temp);
                 }
                 $vieworg = $global_organ_rows[$id];
+
                 $xtpl->assign('VIEWORG', $vieworg);
-                if (!empty($vieworg['email'])) $xtpl->parse('main.vieworg.email');
-                if (!empty($vieworg['phone'])) $xtpl->parse('main.vieworg.phone');
-                if (!empty($vieworg['fax'])) $xtpl->parse('main.vieworg.fax');
-                if (!empty($vieworg['description'])) $xtpl->parse('main.vieworg.description');
+
+                if (!empty($vieworg['email'])) {
+                    $xtpl->parse('main.vieworg.email');
+                }
+                if (!empty($vieworg['phone'])) {
+                    $xtpl->parse('main.vieworg.phone');
+                }
+                if (!empty($vieworg['fax'])) {
+                    $xtpl->parse('main.vieworg.fax');
+                }
+                if (!empty($vieworg['description'])) {
+                    $xtpl->parse('main.vieworg.description');
+                }
 
                 $xtpl->parse('main.vieworg');
             }
@@ -288,9 +317,17 @@ function vieworg_catelist($array_content, $suborg = array())
                 if (!empty($content['data'])) {
                     $cate = $global_organ_rows[$content['id']];
                     $xtpl->assign('CATE', $cate);
-                    if (!empty($cate['email'])) $xtpl->parse('main.cateloop.email');
-                    if (!empty($cate['phone'])) $xtpl->parse('main.cateloop.phone');
-                    if (!empty($cate['fax'])) $xtpl->parse('main.cateloop.fax');
+
+                    if (!empty($cate['email'])) {
+                        $xtpl->parse('main.cateloop.email');
+                    }
+                    if (!empty($cate['phone'])) {
+                        $xtpl->parse('main.cateloop.phone');
+                    }
+                    if (!empty($cate['fax'])) {
+                        $xtpl->parse('main.cateloop.fax');
+                    }
+
                     $i = 1;
                     $org_item = '';
                     foreach ($content['data'] as $person) {
@@ -298,20 +335,39 @@ function vieworg_catelist($array_content, $suborg = array())
                             $org_item = $person['organid'];
                             $cat = $global_organ_rows[$org_item];
                             $xtpl->assign('CAT', $cat);
-                            if (!empty($cat['email'])) $xtpl->parse('main.cateloop.loop.cat.email');
+
+                            if (!empty($cat['email'])) {
+                                $xtpl->parse('main.cateloop.loop.cat.email');
+                            }
+
                             $xtpl->parse('main.cateloop.loop.cat');
                             $i = 1;
                         }
                         $person['no'] = $i;
-                        $person['birthday'] = date('d/m/Y', $person['birthday']);
+                        $person['birthday'] = $person['birthday'] ? nv_date('d/m/Y', $person['birthday']) : '';
 
-                        if (!empty($person['position_other'])) $person['position_other'] = '</br>' . $person['position_other'];
-                        if (!empty($person['professional'])) $person['professional'] = '</br>' . $person['professional'];
+                        if (!empty($person['position_other'])) {
+                            $person['position_other'] = '</br>' . $person['position_other'];
+                        }
+                        if (!empty($person['professional'])) {
+                            $person['professional'] = '</br>' . $person['professional'];
+                        }
+
                         $xtpl->assign('ROW', $person);
-                        if (!empty($person['email'])) $xtpl->parse('main.cateloop.loop.email');
-                        if (!empty($person['mobile']) or !empty($person['phone']) or !empty($person['phone_ext'])) $xtpl->parse('main.cateloop.loop.phone');
-                        if (!empty($person['phone_ext'])) $xtpl->parse('main.cateloop.loop.br1');
-                        if (!empty($person['phone'])) $xtpl->parse('main.cateloop.loop.br2');
+
+                        if (!empty($person['email'])) {
+                            $xtpl->parse('main.cateloop.loop.email');
+                        }
+                        if (!empty($person['mobile']) or !empty($person['phone']) or !empty($person['phone_ext'])) {
+                            $xtpl->parse('main.cateloop.loop.phone');
+                        }
+                        if (!empty($person['phone_ext'])) {
+                            $xtpl->parse('main.cateloop.loop.br1');
+                        }
+                        if (!empty($person['phone'])) {
+                            $xtpl->parse('main.cateloop.loop.br2');
+                        }
+
                         $xtpl->parse('main.cateloop.loop');
                         $i++;
                     }
@@ -343,7 +399,7 @@ function vieworg_catelist($array_content, $suborg = array())
 
                     $i = 1;
                     foreach ($content['data'] as $person) {
-                        $person['birthday'] = date('d/m/Y', $person['birthday']);
+                        $person['birthday'] = $person['birthday'] ? nv_date('d/m/Y', $person['birthday']) : '';
                         $person['no'] = $i;
                         $xtpl->assign('ROW', $person);
                         $xtpl->parse('main.cateloop.loop');
@@ -356,7 +412,6 @@ function vieworg_catelist($array_content, $suborg = array())
         $xtpl->parse('main');
         return $xtpl->text('main');
     }
-
 }
 
 function searchresult($person_data, $html_pages, $array_search)
