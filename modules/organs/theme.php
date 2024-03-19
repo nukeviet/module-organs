@@ -41,12 +41,16 @@ function detail_per($data_content)
 
     $xtpl->assign('DATA', $data_content);
 
+    $numother = 0;
+
     if ($data_content['dayparty'] > 0) {
-        $xtpl->parse('main.dayparty');
+        $xtpl->parse('main.other.dayparty');
+        $numother++;
     }
 
     if ($data_content['dayinto'] > 0) {
-        $xtpl->parse('main.dayinto');
+        $xtpl->parse('main.other.dayinto');
+        $numother++;
     }
 
     if (!empty($data_content['description'])) {
@@ -58,39 +62,52 @@ function detail_per($data_content)
     }
 
     if (!empty($data_content['email'])) {
-        $xtpl->parse('main.email');
+        $xtpl->parse('main.other.email');
+        $numother++;
     }
 
     if (!empty($data_content['phone'])) {
-        $xtpl->parse('main.phone');
+        $xtpl->parse('main.other.phone');
+        $numother++;
     }
 
     if (!empty($data_content['phone_ext'])) {
-        $xtpl->parse('main.phone_ext');
+        $xtpl->parse('main.other.phone_ext');
+        $numother++;
     }
 
     if (!empty($data_content['mobile'])) {
-        $xtpl->parse('main.mobile');
+        $xtpl->parse('main.other.mobile');
+        $numother++;
     }
 
     if (!empty($data_content['marital_status'])) {
-        $xtpl->parse('main.marital_status');
+        $xtpl->parse('main.other.marital_status');
+        $numother++;
     }
 
     if (!empty($data_content['address'])) {
-        $xtpl->parse('main.address');
+        $xtpl->parse('main.other.address');
+        $numother++;
     }
 
     if (!empty($data_content['professional'])) {
-        $xtpl->parse('main.professional');
+        $xtpl->parse('main.other.professional');
+        $numother++;
     }
 
     if (!empty($data_content['political'])) {
-        $xtpl->parse('main.political');
+        $xtpl->parse('main.other.political');
+        $numother++;
     }
 
     if (!empty($data_content['place_birth'])) {
-        $xtpl->parse('main.place_birth');
+        $xtpl->parse('main.other.place_birth');
+        $numother++;
+    }
+
+    if ($numother > 0) {
+        $xtpl->parse('main.other');
     }
 
     if ($data_content['photo']) {
@@ -260,7 +277,7 @@ function vieworg_catelist($array_content, $suborg = array())
             foreach ($array_content as $content) {
                 $suborganid = array();
                 if (!empty($content['suborgan'])) {
-                	$suborganid = explode(',', $content['suborgan']);
+                    $suborganid = explode(',', $content['suborgan']);
                     foreach ($suborganid as $sid) {
                         $xtpl->assign('SUBORGAN', $global_organ_rows[$sid]);
                         $xtpl->parse('main.cateloop.suborgan.loop');
@@ -287,7 +304,7 @@ function vieworg_catelist($array_content, $suborg = array())
                         }
                         $person['no'] = $i;
                         $person['birthday'] = date('d/m/Y', $person['birthday']);
-                        
+
                         if (!empty($person['position_other'])) $person['position_other'] = '</br>' . $person['position_other'];
                         if (!empty($person['professional'])) $person['professional'] = '</br>' . $person['professional'];
                         $xtpl->assign('ROW', $person);
