@@ -64,7 +64,7 @@ $base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_D
 
 $array_search = array(
     'q' => $nv_Request->get_title('q', 'get', ''),
-    'organid' => $nv_Request->get_int('organid', 'get', 0),
+    'organid' => $nv_Request->get_int('pid', 'get', 0),
     'active' => $nv_Request->get_int('active', 'get', '-1'),
     'per_page' => $nv_Request->get_int('per_page', 'get', '20')
 );
@@ -76,7 +76,7 @@ if (!empty($array_search['q'])) {
 }
 if (!empty($array_search['organid'])) {
     $base_url .= '&organid=' . $array_search['organid'];
-    $where .= ' AND t1.organid=' . $array_search['organid'];
+    //$where .= ' AND t1.organid=' . $array_search['organid'];
 }
 if ($array_search['active'] >= 0) {
     $base_url .= '&active=' . $array_search['active'];
@@ -86,6 +86,7 @@ $base_url .= '&per_page=' . $array_search['per_page'];
 
 if (!empty($array_organs[$organid])) {
     $array_id = getall_organid_parent($array_organs, $organid);
+
     $temp_title = "";
     foreach ($array_id as $id_i) {
         $link = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=listper&amp;pid=" . $id_i;
@@ -95,9 +96,14 @@ if (!empty($array_organs[$organid])) {
 }
 
 $list_chid = getall_organid_of_parent($array_organs, $organid);
-$list_chid_str = $organid;
-if (!empty($list_chid))
-    $list_chid_str = $list_chid_str . ',' . implode(',', $list_chid);
+if (empty($organid)) {
+    $list_chid_str = implode(',', array_keys($array_organs));
+} else {
+    $list_chid_str = $organid;
+    //if (!empty($list_chid)) {
+    //    $list_chid_str = $list_chid_str . ',' . implode(',', $list_chid);
+    //}
+}
 
 $xtpl = new XTemplate("listper.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file);
 $xtpl->assign('LANG', $lang_module);
@@ -121,6 +127,7 @@ $numf = $result_all->fetchColumn();
 $all_page = ($numf) ? $numf : 1;
 
 $i = ($page - 1) * $per_page + 1;
+
 while ($row = $result->fetch()) {
     if ($row['active'] == '1') {
         $ck_yes = "selected=\"selected\"";
@@ -143,7 +150,16 @@ while ($row = $result->fetch()) {
     $row['link_del'] = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=delper&amp;id=" . $row['personid'] . "&amp;oid=" . $organid;
     $row['link_view'] = nv_url_rewrite(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=person/" . $array_organs[$row['organid']]['alias'] . "-" . $row['organid'] . "/" . change_alias($row['name']) . "-" . $row['personid'], true);
 
+    /*
     if (empty($list_chid)) {
+        $row['select_weight'] = drawselect_number($row['personid'], 1, $all_page + 1, $row['weight'], "nv_chang_person('" . $row['personid'] . "',this,url_change_weight,url_back);", $enable);
+    } else {
+        $row['select_weight'] = $i;
+    }
+    // Chỗ này hơi không hợp logic khi có tổ chức dạng đa cấp, không chỉnh được thứ tự nhân sự trong tổ chức cha
+    // Nên để cho nó khi tìm kiếm chỉ hiển thị đúng nhân sự thuộc nó
+    */
+    if ($organid > 0) {
         $row['select_weight'] = drawselect_number($row['personid'], 1, $all_page + 1, $row['weight'], "nv_chang_person('" . $row['personid'] . "',this,url_change_weight,url_back);", $enable);
     } else {
         $row['select_weight'] = $i;

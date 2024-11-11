@@ -19,7 +19,7 @@
             </div>
             <div class="col-xs-24 col-md-6">
                 <div class="form-group">
-                    <select class="form-control" name="organid">
+                    <select class="form-control" name="pid">
                         <option value="0">---{LANG.organ_c}---</option>
                         <!-- BEGIN: organs -->
                         <option value="{ORGANS.organid}" {ORGANS.selected}>{ORGANS.space}{ORGANS.title}</option>
