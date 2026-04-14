@@ -102,7 +102,7 @@ if ($organs_data['numsub'] > 0) {
             // Hien thi phong ban truc thuoc
             $i++;
             $suborg[$i]['link'] = $organinfo['link'];
-            $suborg[$i]['title'] = ucwords(mb_strtolower($organinfo['title']));
+            $suborg[$i]['title'] = $organinfo['title'];
 
             //Số nhân sự hiển thị ở tổ chức
             $sql = 'SELECT * FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE organid=' . intval($organinfo['organid']) . ' AND active=1 ORDER BY weight';
