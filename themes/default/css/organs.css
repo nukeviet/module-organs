@@ -361,3 +361,19 @@ ul.d-grid > li{
         grid-template-columns: 1fr;
     }
 }
+
+/*Grid view*/
+.organs-gridview {
+	display: flex;
+    flex-wrap: wrap;
+}
+
+.organs-gridview > div {
+    display: flex;
+}
+
+.organs-gridview .thumbnail {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

@@ -37,7 +37,7 @@
 
         <!-- BEGIN: person -->
         <hr />
-        <div class="row">
+        <div class="row organs-gridview">
             <!-- BEGIN: loop -->
             <div class="col-sm-6 col-md-6">
                 <div class="thumbnail">
