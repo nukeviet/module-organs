@@ -62,3 +62,7 @@
 /.github
 /LICENSE
 /api.php
+/.claude
+/.vscode
+/CLAUDE.md
+/docs

@@ -1,12 +1,11 @@
 <!-- BEGIN: main -->
 <!-- BEGIN: suborg -->
-<strong>{LANG.list_sub_org}:</strong><br />
-<div class="suborg"> <!--Cac phong ban truc thuoc-->
-    
+<h2 class="margin-bottom">{LANG.list_sub_org}:</h2>
+<div class="suborg">
     <ol>
-    <!-- BEGIN: loop  -->
-    <li><h3><a href="{suborg.link}">{suborg.title}</a></h3></li>
-    <!-- END: loop -->
+        <!-- BEGIN: loop  -->
+        <li><h3><a href="{suborg.link}">{suborg.title}</a></h3></li>
+        <!-- END: loop -->
     </ol>
 </div>
 <!-- END: suborg -->
@@ -44,7 +43,7 @@
             </tr>
         </thead>
         <tbody>
-            
+
             <!-- BEGIN: loop  -->
                 <!-- BEGIN: cat  -->
                 <tr>

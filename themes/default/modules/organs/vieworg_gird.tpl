@@ -1,11 +1,10 @@
 <!-- BEGIN: main -->
-<script src="{NV_STATIC_URL}themes/default/js/jquery.matchHeight-min.js" type="text/javascript"></script>
 <div class="panel panel-primary">
     <div class="panel-heading">
-        {DATA.title}
+        <h1 class="h2">{DATA.title}</h1>
     </div>
     <div class="panel-body">
-        <ul style="padding: 0">
+        <ul class="list-unstyled">
             <!-- BEGIN: address -->
             <li>
                 <strong>{LANG.vieworg_address}:</strong> {DATA.address}
@@ -37,12 +36,14 @@
 
         <!-- BEGIN: person -->
         <hr />
-        <div class="row">
+        <div class="grid-org-person">
             <!-- BEGIN: loop -->
-            <div class="col-sm-6 col-md-6">
+            <div class="grid-org-person-item">
                 <div class="thumbnail">
-                    <div style="height: {HEIGHT}px">
-                        <a href="{ROW.link}" title="{ROW.name}"><img class="imgthumbnail" src="{ROW.photo}" style="max-height: {HEIGHT}px" alt="{ROW.name}"></a>
+                    <div class="thumbnail-wraper">
+                        <a href="{ROW.link}" title="{ROW.name}">
+                            <img class="imgthumbnail" src="{ROW.photo}" style="max-width: {WIDTH}px;aspect-ratio: {WIDTH} / {HEIGHT};" alt="{ROW.name}">
+                        </a>
                     </div>
                     <div class="caption text-center">
                         <h3><a href="{ROW.link}" title="{ROW.name}">{ROW.name}</a></h3>
@@ -63,55 +64,38 @@
     {html_pages}
 </div>
 <!-- END: pages -->
-<style>
-    .short-desc .morecontent span {
-        display: none;
-    }
-    .morelink, .morelink:link {
-        display: block;
-        color: #428bca;
-        font-weight: bold;
-        margin-top: 5px;
-    }
-    .morelink.less {
-        margin-top: -25px;
-    }
-</style>
 <script type="text/javascript">
-    $(function() {
-        $('.thumbnail').matchHeight({
-            property: 'min-height'
-        });
-    });
-    $(document).ready(function() {
-        var showChar = 500;
-        var ellipsestext = "...";
-        var moretext = "{LANG.moretext}";
-        var lesstext = "{LANG.lesstext}";
-        var content = $('.short-desc').html();
-        if ($('.short-desc').length) {
-            if(content.length > showChar) {
+$(document).ready(function() {
+    var showChar = 500;
+    var ellipsestext = "...";
+    var moretext = $.trim("{LANG.moretext}");
+    var lesstext = $.trim("{LANG.lesstext}");
+    var content = $('.short-desc').html();
+    if ($('.short-desc').length) {
+        if(content.length > showChar) {
 
-                var c = content.substr(0, showChar);
-                var h = content.substr(showChar, content.length - showChar);
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar, content.length - showChar);
 
-                var html = c + '<span class="moreellipses">' + ellipsestext+ '</span><span class="morecontent"><span>' + h + '</span><a href="#" class="morelink">' + moretext + '</a></span>';
+            var html = '<span class="teaser">' + c + '</span><span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + h + '</span></span><a href="#" class="morelink">' + moretext + '</a>';
 
-                $('.short-desc').html(html);
-            }
+            $('.short-desc').addClass('is-collapsed').html(html);
         }
-        $(".morelink").click(function(){
-            if($(this).hasClass("less")) {
-                $(this).removeClass("less");
-                $(this).html(moretext);
-            } else {
-                $(this).addClass("less");
-                $(this).html(lesstext);
-            }
-            $(this).parent().prev().toggle();
-            $(this).prev().toggle();
-            return false;
-        });
+    }
+    $(document).on('click', '.short-desc .morelink', function(){
+        var $link = $(this);
+        var $desc = $link.closest('.short-desc');
+
+        if ($link.hasClass('less')) {
+            $link.removeClass('less').html(moretext);
+        } else {
+            $link.addClass('less').html(lesstext);
+        }
+
+        $desc.find('.morecontent > span').toggle();
+        $desc.find('.moreellipses').toggle();
+        return false;
     });
+});
 </script>
 <!-- END: main -->

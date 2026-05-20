@@ -1,43 +1,39 @@
 <!-- BEGIN: main -->
 <div class="panel panel-primary table_org">
     <div class="vieworg">
-        <div class="org">
-            {DATA.title}
-        </div>
-        <div class="panel-body">
-            <ul style="padding: 0">
-                <!-- BEGIN: address -->
-                <li>
-                    <strong>{LANG.vieworg_address}:</strong> {DATA.address}
-                </li>
-                <!-- END: address -->
-                <!-- BEGIN: phone -->
-                <li>
-                    <strong>{LANG.vieworg_phone}:</strong> {DATA.phone}
-                </li>
-                <!-- END: phone -->
-                <!-- BEGIN: fax -->
-                <li>
-                    <strong>{LANG.vieworg_fax}:</strong> {DATA.fax}
-                </li>
-                <!-- END: fax -->
-                <!-- BEGIN: website -->
-                <li>
-                    <strong>{LANG.vieworg_website}:</strong> {DATA.website}
-                </li>
-                <!-- END: website -->
-            </ul>
+        <h1 class="margin-bottom-lg">{DATA.title}</h1>
+        <ul class="list-unstyled">
+            <!-- BEGIN: address -->
+            <li>
+                <strong>{LANG.vieworg_address}:</strong> {DATA.address}
+            </li>
+            <!-- END: address -->
+            <!-- BEGIN: phone -->
+            <li>
+                <strong>{LANG.vieworg_phone}:</strong> {DATA.phone}
+            </li>
+            <!-- END: phone -->
+            <!-- BEGIN: fax -->
+            <li>
+                <strong>{LANG.vieworg_fax}:</strong> {DATA.fax}
+            </li>
+            <!-- END: fax -->
+            <!-- BEGIN: website -->
+            <li>
+                <strong>{LANG.vieworg_website}:</strong> {DATA.website}
+            </li>
+            <!-- END: website -->
+        </ul>
 
-            <!-- BEGIN: about -->
-            <p class="short-desc">
-                {DATA.description}
-            </p>
-            <!-- END: about -->
+        <!-- BEGIN: about -->
+        <p class="short-desc">
+            {DATA.description}
+        </p>
+        <!-- END: about -->
 
-            <p class="text-center">
-                {admin_link}
-            </p>
-        </div>
+        <p class="text-center">
+            {admin_link}
+        </p>
     </div>
     <!-- BEGIN: person -->
 
@@ -84,20 +80,6 @@
     {html_pages}
 </div>
 <!-- END: pages -->
-<style>
-    .short-desc .morecontent span {
-        display: none;
-    }
-    .morelink, .morelink:link {
-        display: block;
-        color: #428bca;
-        font-weight: bold;
-        margin-top: 5px;
-    }
-    .morelink.less {
-        margin-top: -25px;
-    }
-</style>
 <script type="text/javascript">
     $(document).ready(function() {
         var showChar = 500;

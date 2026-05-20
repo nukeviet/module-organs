@@ -65,3 +65,5 @@ $lang_module['infor_person'] = "Thông tin nhân sự";
 $lang_module['infor_other'] = "Thông tin khác";
 $lang_module['infor_basic'] = "Thông tin cơ bản";
 $lang_module['infor_biography'] = "Tiểu sử";
+$lang_module['moretext'] = 'Xem thêm';
+$lang_module['lesstext'] = 'Thu gọn';

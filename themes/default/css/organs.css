@@ -264,27 +264,16 @@ table.tabo thead {
     margin: 0 10px 0 10px
 }
 
-.vieworg {
-    border: 1px solid #eee;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.vieworg .org {
-    font-size: 18px;
-    font-weight: 700;
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-    color: #0707CE;
-}
-
 .suborg {
     border: 1px solid #eee;
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+.suborg ol {
+    padding-left: 30px;
+    margin-bottom: 0;
 }
 
 .suborg ol li {
@@ -350,6 +339,75 @@ ul.d-grid > li{
     background-color: transparent !important;
 }
 
+.short-desc {
+    position: relative;
+    line-height: 1.5;
+}
+
+.short-desc .morecontent span {
+    display: none;
+}
+
+.morelink, .morelink:link {
+    display: block;
+    margin-top: -2.8em;
+    padding: 2.8em 0 0.2em;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff 62%);
+    outline: none;
+    text-align: right;
+    position: relative;
+    z-index: 2;
+}
+
+.morelink.less, .morelink.less:link {
+    margin-top: 8px;
+    padding-top: 0;
+    background: none;
+    text-align: left;
+}
+
+.grid-org-person {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.grid-org-person-item {
+    flex: 0 0 25%;
+    padding-left: 5px;
+    padding-right: 5px;
+    max-width: 25%;
+    margin-bottom: 10px;
+}
+
+.grid-org-person-item .thumbnail {
+    height: 100%;
+    margin-bottom: 0;
+}
+
+.grid-org-person-item .thumbnail .caption {
+    padding: 0;
+}
+
+.grid-org-person-item .thumbnail .imgthumbnail {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+.grid-org-person-item .thumbnail-wraper {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 991.98px) {
+    .grid-org-person-item {
+        flex: 0 0 33.3333333333%;
+        max-width: 33.3333333333%;
+    }
+}
+
 @media (max-width: 549.98px) {
     .flex-dir {
         flex-direction: column;
@@ -359,5 +417,12 @@ ul.d-grid > li{
     }
     .d-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 499.98px) {
+    .grid-org-person-item {
+        flex: 0 0 50%;
+        max-width: 50%;
     }
 }
