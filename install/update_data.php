@@ -30,6 +30,7 @@ $nv_update_config['support_website'] = 'https://github.com/nukeviet/module-organ
 $nv_update_config['to_version'] = '4.5.04';
 $nv_update_config['allow_old_version'] = [
     '4.3.00',
+    '4.3.03',
     '4.5.00',
     '4.5.02',
     '4.5.03',
