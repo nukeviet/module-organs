@@ -185,16 +185,14 @@ function getall_numper_of_parent($array_organs, $pid)
 }
 
 /**
- * getall_organid_parent()
- *
  * @param mixed $array_organs
  * @param mixed $oid
  * @return
  */
 function getall_organid_parent($array_organs, $oid)
 {
-    $array_id = array();
-    if ($array_organs[$oid]['parentid'] > 0) {
+    $array_id = [];
+    if (isset($array_organs[$oid]) and $array_organs[$oid]['parentid'] > 0 and isset($array_organs[$array_organs[$oid]['parentid']])) {
         $array_id[] = $array_organs[$oid]['parentid'];
         $temp_array = getall_organid_parent($array_organs, $array_organs[$oid]['parentid']);
         $array_id = array_merge($temp_array, $array_id);

@@ -18,11 +18,11 @@ if ($personid > 0) {
     $listall = array($personid);
 } else {
     $listall = $nv_Request->get_string('listall', 'post,get');
-    $listall = array_filter(array_unique(array_map('trim', explode(',', $listall))));
+    $listall = array_filter(array_unique(array_map('intval', explode(',', $listall))));
 }
 
 foreach ($listall as $personid) {
-    list($personid, $organid, $old_weight) = $db->query('SELECT personid , organid, weight FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $personid)->fetch(3);
+    list($personid, $organid, $old_weight) = $db->query('SELECT personid , organid, weight FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $personid)->fetch(3) ?: [0, 0, 0];
     if ($personid > 0 and $organid > 0 and (
         defined('NV_IS_ADMIN_MODULE') or (
             isset($array_organs_admin[$admin_info['admin_id']][$organid]) and

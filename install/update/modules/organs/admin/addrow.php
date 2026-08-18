@@ -23,7 +23,7 @@ if ($nv_Request->isset_request('get_alias_title', 'post')) {
         $alias = $alias . '-' . $weight;
     }
 
-    die($alias);
+    nv_htmlOutput($alias);
 }
 
 $page_title = $lang_module['addrow_title'];
@@ -200,6 +200,7 @@ while ($row = $result->fetch()) {
 }
 
 /*end set input select parentid*/
+$data['description'] = nv_htmlspecialchars($data['description']);
 
 /**begin set NV_EDITOR**/
 if (defined('NV_EDITOR')) {

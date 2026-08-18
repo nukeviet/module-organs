@@ -1,11 +1,10 @@
 <!-- BEGIN: main -->
-<script src="{NV_STATIC_URL}themes/default/js/jquery.matchHeight-min.js" type="text/javascript"></script>
 <div class="panel panel-primary">
     <div class="panel-heading">
-        {DATA.title}
+        <h1 class="h2">{DATA.title}</h1>
     </div>
     <div class="panel-body">
-        <ul style="padding: 0">
+        <ul class="list-unstyled">
             <!-- BEGIN: address -->
             <li>
                 <strong>{LANG.vieworg_address}:</strong> {DATA.address}
@@ -28,7 +27,7 @@
             <!-- END: website -->
         </ul>
         <!-- BEGIN: about -->
-        <p>{DATA.description}</p>
+        <p class="short-desc">{DATA.description}</p>
         <!-- END: about -->
 
         <p class="text-center">
@@ -37,17 +36,19 @@
 
         <!-- BEGIN: person -->
         <hr />
-        <div class="row">
+        <div class="grid-org-person">
             <!-- BEGIN: loop -->
-            <div class="col-sm-6 col-md-6">
+            <div class="grid-org-person-item">
                 <div class="thumbnail">
-                    <div style="height: {HEIGHT}px">
-                        <a href="{ROW.link}" title="{ROW.name}"><img class="imgthumbnail" src="{ROW.photo}" style="max-height: {HEIGHT}px" alt="{ROW.name}"></a>
+                    <div class="thumbnail-wraper">
+                        <a href="{ROW.link}" title="{ROW.name}">
+                            <img class="imgthumbnail" src="{ROW.photo}" style="max-width: {WIDTH}px;aspect-ratio: {WIDTH} / {HEIGHT};" alt="{ROW.name}">
+                        </a>
                     </div>
                     <div class="caption text-center">
                         <h3><a href="{ROW.link}" title="{ROW.name}">{ROW.name}</a></h3>
                         <p>
-                            {ROW.position}<br /> {ROW.birthday}
+                            {ROW.position}<!-- BEGIN: birthday --><br /> {ROW.birthday}<!-- END: birthday -->
                         </p>
                     </div>
                 </div>
@@ -64,10 +65,37 @@
 </div>
 <!-- END: pages -->
 <script type="text/javascript">
-    $(function() {
-        $('.thumbnail').matchHeight({
-            property: 'min-height'
-        });
+$(document).ready(function() {
+    var showChar = 500;
+    var ellipsestext = "...";
+    var moretext = $.trim("{LANG.moretext}");
+    var lesstext = $.trim("{LANG.lesstext}");
+    var content = $('.short-desc').html();
+    if ($('.short-desc').length) {
+        if(content.length > showChar) {
+
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar, content.length - showChar);
+
+            var html = '<span class="teaser">' + c + '</span><span class="moreellipses">' + ellipsestext + '</span><span class="morecontent"><span>' + h + '</span></span><a href="#" class="morelink">' + moretext + '</a>';
+
+            $('.short-desc').addClass('is-collapsed').html(html);
+        }
+    }
+    $(document).on('click', '.short-desc .morelink', function(){
+        var $link = $(this);
+        var $desc = $link.closest('.short-desc');
+
+        if ($link.hasClass('less')) {
+            $link.removeClass('less').html(moretext);
+        } else {
+            $link.addClass('less').html(lesstext);
+        }
+
+        $desc.find('.morecontent > span').toggle();
+        $desc.find('.moreellipses').toggle();
+        return false;
     });
+});
 </script>
 <!-- END: main -->

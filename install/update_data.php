@@ -12,69 +12,75 @@ if (!defined('NV_IS_UPDATE')) {
     die('Stop!!!');
 }
 
-$nv_update_config = array();
+$nv_update_config = [];
 
 // Kieu nang cap 1: Update; 2: Upgrade
 $nv_update_config['type'] = 1;
 
 // ID goi cap nhat
-$nv_update_config['packageID'] = 'NVUORGANS4502';
+$nv_update_config['packageID'] = 'NVUORGANS4504';
 
 // Cap nhat cho module nao, de trong neu la cap nhat NukeViet, ten thu muc module neu la cap nhat module
 $nv_update_config['formodule'] = 'organs';
 
 // Thong tin phien ban, tac gia, ho tro
-$nv_update_config['release_date'] = 1664008363;
+$nv_update_config['release_date'] = 1787047093;
 $nv_update_config['author'] = 'VINADES.,JSC <contact@vinades.vn>';
-$nv_update_config['support_website'] = 'https://github.com/nukeviet/module-organs/tree/to-4.5.02';
-$nv_update_config['to_version'] = '4.5.02';
-$nv_update_config['allow_old_version'] = array('4.3.00', '4.5.00');
+$nv_update_config['support_website'] = 'https://github.com/nukeviet/module-organs/tree/to-4.5.04';
+$nv_update_config['to_version'] = '4.5.04';
+$nv_update_config['allow_old_version'] = [
+    '4.3.00',
+    '4.5.00',
+    '4.5.02',
+    '4.5.03',
+    '4.5.04',
+];
 
 // 0:Nang cap bang tay, 1:Nang cap tu dong, 2:Nang cap nua tu dong
 $nv_update_config['update_auto_type'] = 1;
 
-$nv_update_config['lang'] = array();
-$nv_update_config['lang']['vi'] = array();
+$nv_update_config['lang'] = [];
+$nv_update_config['lang']['vi'] = [];
 
 // Tiếng Việt
 $nv_update_config['lang']['vi']['nv_up_f1'] = 'Thêm bảng dữ liệu';
 $nv_update_config['lang']['vi']['nv_up_f2'] = 'Cập nhật cấu hình CSDL';
 $nv_update_config['lang']['vi']['nv_up_finish'] = 'Đánh dấu phiên bản mới';
 
-$nv_update_config['tasklist'] = array();
+$nv_update_config['tasklist'] = [];
 
-$nv_update_config['tasklist'][] = array(
+$nv_update_config['tasklist'][] = [
     'r' => '4.5.00',
     'rq' => 1,
     'l' => 'nv_up_f1',
     'f' => 'nv_up_f1'
-);
+];
 
-$nv_update_config['tasklist'][] = array(
+$nv_update_config['tasklist'][] = [
     'r' => '4.5.00',
     'rq' => 1,
     'l' => 'nv_up_f2',
     'f' => 'nv_up_f2'
-);
+];
 
-$nv_update_config['tasklist'][] = array(
-    'r' => '4.5.02',
+$nv_update_config['tasklist'][] = [
+    'r' => $nv_update_config['to_version'],
     'rq' => 1,
     'l' => 'nv_up_finish',
     'f' => 'nv_up_finish'
-);
+];
 
 // Danh sach cac function
 /*
 Chuan hoa tra ve:
-array(
+[
 'status' =>
 'complete' =>
 'next' =>
 'link' =>
 'lang' =>
 'message' =>
-);
+];
 status: Trang thai tien trinh dang chay
 - 0: That bai
 - 1: Thanh cong
@@ -97,18 +103,18 @@ Duoc ho tro boi bien $nv_update_baseurl de load lai nhieu lan mot function
 Kieu cap nhat module duoc ho tro boi bien $old_module_version
 */
 
-$array_modlang_update = array();
-$array_modtable_update = array();
+$array_modlang_update = [];
+$array_modtable_update = [];
 
 // Lay danh sach ngon ngu
 $result = $db->query("SELECT lang FROM " . $db_config['prefix'] . "_setup_language WHERE setup=1");
 while (list($_tmp) = $result->fetch(PDO::FETCH_NUM)) {
-    $array_modlang_update[$_tmp] = array("lang" => $_tmp, "mod" => array());
+    $array_modlang_update[$_tmp] = ["lang" => $_tmp, "mod" => []];
 
     // Get all module
     $result1 = $db->query("SELECT title, module_data FROM " . $db_config['prefix'] . "_" . $_tmp . "_modules WHERE module_file=" . $db->quote($nv_update_config['formodule']));
     while (list($_modt, $_modd) = $result1->fetch(PDO::FETCH_NUM)) {
-        $array_modlang_update[$_tmp]['mod'][] = array("module_title" => $_modt, "module_data" => $_modd);
+        $array_modlang_update[$_tmp]['mod'][] = ["module_title" => $_modt, "module_data" => $_modd];
         $array_modtable_update[] = $db_config['prefix'] . "_" . $_tmp . "_" . $_modd;
     }
 }
@@ -123,14 +129,14 @@ function nv_up_f1()
 {
     global $nv_update_baseurl, $db, $db_config, $nv_Cache, $array_modlang_update;
 
-    $return = array(
+    $return = [
         'status' => 1,
         'complete' => 1,
         'next' => 1,
         'link' => 'NO',
         'lang' => 'NO',
         'message' => ''
-    );
+    ];
 
     foreach ($array_modlang_update as $lang => $array_mod) {
         foreach ($array_mod['mod'] as $module_info) {
@@ -147,7 +153,7 @@ function nv_up_f1()
                     UNIQUE KEY userid (userid,organid)
                 ) ENGINE=MyISAM";
                 $db->query($sql);
-            } catch (PDOException $e) {
+            } catch (Throwable $e) {
                 trigger_error($e->getMessage());
             }
         }
@@ -166,14 +172,14 @@ function nv_up_f2()
 {
     global $nv_update_baseurl, $db, $db_config, $nv_Cache, $array_modlang_update;
 
-    $return = array(
+    $return = [
         'status' => 1,
         'complete' => 1,
         'next' => 1,
         'link' => 'NO',
         'lang' => 'NO',
         'message' => ''
-    );
+    ];
 
     foreach ($array_modlang_update as $lang => $array_mod) {
         foreach ($array_mod['mod'] as $module_info) {
@@ -191,7 +197,7 @@ function nv_up_f2()
                         config_value='5'
                     WHERE config_name='per_page_parent'");
                 }
-            } catch(PDOException $e) {
+            } catch(Throwable $e) {
                 trigger_error($e->getMessage());
             }
         }
@@ -210,14 +216,14 @@ function nv_up_finish()
 {
     global $nv_update_baseurl, $db, $db_config, $nv_Cache, $nv_update_config;
 
-    $return = array(
+    $return = [
         'status' => 1,
         'complete' => 1,
         'next' => 1,
         'link' => 'NO',
         'lang' => 'NO',
         'message' => ''
-    );
+    ];
 
     try {
         $num = $db->query("SELECT COUNT(*) FROM " . $db_config['prefix'] . "_setup_extensions WHERE basename='" . $nv_update_config['formodule'] . "' AND type='module'")->fetchColumn();
@@ -237,7 +243,7 @@ function nv_up_finish()
                 author='VINADES.,JSC (contact@vinades.vn)'
             WHERE basename='" . $nv_update_config['formodule'] . "' AND type='module'");
         }
-    } catch (PDOException $e) {
+    } catch (Throwable $e) {
         trigger_error($e->getMessage());
     }
 

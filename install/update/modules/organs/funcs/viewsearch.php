@@ -12,7 +12,8 @@ if (!defined('NV_IS_MOD_ORGAN'))
     die('Stop!!!');
 
 $where = [];
-$page_title = $module_info['site_title'];
+$page_title = $lang_module['search_submit'] . NV_TITLEBAR_DEFIS . $module_info['site_title'];
+$is_search = false;
 $key_words = $module_info['keywords'];
 $page_url = $base_url = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op;
 $per_page = $arr_config['per_page'];
@@ -28,24 +29,31 @@ $array_search = [
 if (!empty($array_search['q'])) {
     $where[] = 'name LIKE \'%' . $db->dblikeescape($array_search['q']) . '%\'';
     $base_url .= '&amp;q=' . urlencode($array_search['q']);
+    $is_search = true;
 }
 if (!empty($array_search['e'])) {
     $where[] = 'email LIKE \'%' . $db->dblikeescape($array_search['e']) . '%\'';
     $base_url .= '&amp;e=' . urlencode($array_search['e']);
+    $is_search = true;
 }
 if (!empty($array_search['p'])) {
     $where[] = '(mobile LIKE \'%' . $db->dblikeescape($array_search['p']) . '%\' OR phone LIKE \'%' . $db->dblikeescape($array_search['p']) . '%\')';
     $base_url .= '&amp;q=' . urlencode($array_search['p']);
+    $is_search = true;
 }
 if (!empty($array_search['oid'])) {
     $where[] = 'organid = ' . intval($array_search['oid']);
     $base_url .= '&amp;oid=' . intval($array_search['oid']);
+    $is_search = true;
 }
 
 if ($page > 1) {
     $page_url .= '&amp;page=' . intval($page);
 }
 
+if ($is_search) {
+    $nv_BotManager->setPrivate();
+}
 $page_url = $base_url;
 
 $canonicalUrl = getCanonicalUrl($page_url);
