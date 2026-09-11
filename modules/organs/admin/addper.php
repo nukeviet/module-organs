@@ -17,7 +17,9 @@ $month_dir_module = nv_mkdir(NV_UPLOADS_REAL_DIR . '/' . $module_upload, date("Y
 //Lấy thông tin cấu hình
 $sql = 'SELECT config_name, config_value FROM ' . NV_PREFIXLANG . '_' . $module_data . '_config';
 $result = $db->query($sql);
-while (list($c_config_name, $c_config_value) = $result->fetch(3)) {
+while ($_scratch = $result->fetch(3)) {
+    list($c_config_name, $c_config_value) = $_scratch;
+    unset($_scratch);
     $array_config[$c_config_name] = $c_config_value;
 }
 

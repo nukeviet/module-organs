@@ -18,7 +18,9 @@ $link = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA .
 $sql = "SELECT organid, parentid, title, alias, description, numsub, suborgan, numperson,view,lev, email, phone, fax FROM " . NV_PREFIXLANG . "_" . $module_data . "_rows" . " WHERE active=1 ORDER BY orders ASC";
 $result = $db->query($sql);
 $array_cat_list = array();
-while (list ($organid_i, $parentid_i, $title_i, $alias_i, $description, $numsub_i, $suborgan_i, $numperson_i, $view_i, $lev_i, $email, $phone, $fax) = $result->fetch(3)) {
+while ($_scratch = $result->fetch(3)) {
+    list($organid_i, $parentid_i, $title_i, $alias_i, $description, $numsub_i, $suborgan_i, $numperson_i, $view_i, $lev_i, $email, $phone, $fax) = $_scratch;
+    unset($_scratch);
     $link_i = $link . "/" . $alias_i . "-" . $organid_i;
     $global_organ_rows[$organid_i] = array(
         "organid" => $organid_i,

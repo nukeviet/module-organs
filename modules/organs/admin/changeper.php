@@ -15,7 +15,7 @@ $personid = $nv_Request->get_int('personid', 'post', 0);
 $new_weight = $nv_Request->get_int('w', 'post', 0);
 $content = 'NO_' . $personid;
 $table = NV_PREFIXLANG . '_' . $module_data . '_person';
-list($personid, $organid, $old_weight) = $db->query('SELECT personid , organid, weight FROM ' . $table . ' WHERE personid=' . $personid . '')->fetch(3);
+list($personid, $organid, $old_weight) = $db->query('SELECT personid , organid, weight FROM ' . $table . ' WHERE personid=' . $personid . '')->fetch(3) ?: [null, null, null];
 if ($personid > 0 and $organid > 0 and (
     defined('NV_IS_ADMIN_MODULE') or (
         isset($array_organs_admin[$admin_info['admin_id']][$organid]) and

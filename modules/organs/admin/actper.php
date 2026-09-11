@@ -14,7 +14,7 @@ $id = $nv_Request->get_int('id', 'post,get', 0);
 $value = $nv_Request->get_int('value', 'post,get', 0);
 $contents = $lang_module['active_change_not_complete'];
 if ($id > 0) {
-    list($personid, $organid) = $db->query('SELECT personid , organid FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $id)->fetch(3);
+    list($personid, $organid) = $db->query('SELECT personid , organid FROM ' . NV_PREFIXLANG . '_' . $module_data . '_person WHERE personid=' . $id)->fetch(3) ?: [null, null];
     if ($personid > 0 and $organid > 0 and (
         defined('NV_IS_ADMIN_MODULE') or (
             isset($array_organs_admin[$admin_info['admin_id']][$organid]) and

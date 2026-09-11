@@ -14,7 +14,7 @@ $organid = $nv_Request->get_int('oid', 'post', 0);
 $new_weight = $nv_Request->get_int('w', 'post', 0);
 $content = 'NO_' . $organid;
 $table = NV_PREFIXLANG . '_' . $module_data . '_rows';
-list ($organid, $parentid, $numsub) = $db->query('SELECT organid, parentid, numsub FROM ' . $table . ' WHERE organid=' . $organid)->fetch(3);
+list ($organid, $parentid, $numsub) = $db->query('SELECT organid, parentid, numsub FROM ' . $table . ' WHERE organid=' . $organid)->fetch(3) ?: [null, null, null];
 if ($organid > 0) {
     $query = 'SELECT organid FROM ' . $table . ' WHERE organid!=' . $organid . ' AND parentid=' . $parentid . ' ORDER BY weight ASC';
     $result = $db->query($query);
